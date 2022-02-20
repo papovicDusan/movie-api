@@ -1,29 +1,17 @@
-HISTORICAL = 'HI'
-HORROR = 'HO'
-COMEDY = 'CO'
-CRIME = 'CR'
-WESTERN = 'WE'
-FANTASY = 'FA'
-ACTION = 'AC'
-DRAMA = 'DR'
-ROMANCE = 'RO'
-THRILLER = 'TH'
-ADVENTURE = 'AD'
-MYSTERY = 'MY'
-POLITICAL = 'PO'
+from model_utils import Choices
 
-MOVIE_GENRES = [
-        (HISTORICAL, 'Historical'),
-        (HORROR, 'Horror'),
-        (COMEDY, 'Comedy'),
-        (CRIME, 'Crime'),
-        (WESTERN, 'Western'),
-        (FANTASY, 'Fantasy'),
-        (ACTION, 'Action'),
-        (DRAMA, 'Drama'),
-        (ROMANCE, 'Romance'),
-        (THRILLER, 'Thiller'),
-        (ADVENTURE, 'Adventure'),
-        (MYSTERY, 'Mystery'),
-        (POLITICAL, 'Political'),
-]
+MOVIE_GENRES = Choices(
+        ('historical', 'historical'),
+        ('horror', 'horror'),
+        ('comedy', 'comedy'),
+        ('crime', 'crime'),
+        ('western', 'western'),
+        ('fantasy', 'fantasy'),
+        ('action', 'action'),
+        ('drama', 'drama'),
+        ('romance', 'romance'),
+        ('thriller', 'thriller'),
+        ('adventure', 'adventure'),
+        ('mystery', 'mystery'),
+        ('political', 'political'),
+)

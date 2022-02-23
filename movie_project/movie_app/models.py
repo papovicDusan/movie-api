@@ -18,6 +18,7 @@ class Movie(models.Model):
     likes = models.IntegerField(default=0)
     dislikes = models.IntegerField(default=0)
     is_liked = models.BooleanField(default=False)
+    number_visit = models.IntegerField(default=0)
 
     def __str__(self):
         return self.title

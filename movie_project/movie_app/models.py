@@ -28,6 +28,7 @@ class MovieLike(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_likes')
     like = models.IntegerField(choices=Like.choices)
 
+
     def __str__(self):
         return f'{self.movie} | {self.user}'
 
@@ -38,3 +39,4 @@ class MovieComment(models.Model):
 
     def __str__(self):
         return f'{self.user} | {self.content}'
+

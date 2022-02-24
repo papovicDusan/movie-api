@@ -1,7 +1,9 @@
 from rest_framework import generics
+
 from ..models import Movie, MovieLike, MovieComment
 from .serializers import MovieSerializer, MovieLikeSerializer, MovieCommentSerializer
 from .pagination import MovieListPagination, CommentListPagination
+
 from rest_framework import filters
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.exceptions import ValidationError
@@ -22,7 +24,9 @@ class MovieDetail(generics.RetrieveAPIView):
     queryset = Movie.objects.all()
     serializer_class = MovieSerializer
     permission_classes = [IsAuthenticated]
+
     pagination_class = MovieListPagination
+
 
     def get_object(self, pk):
         try:
@@ -92,3 +96,5 @@ class CommentList(generics.ListAPIView):
     def get_queryset(self):
         pk = self.kwargs['pk']
         return MovieComment.objects.filter(movie=pk)
+        movie.save()
+        serializer.save(movie=movie, user=user)

@@ -1,4 +1,5 @@
 from rest_framework import serializers
+
 from ..models import Movie, MovieLike, MovieComment
 
 class MovieCommentSerializer(serializers.ModelSerializer):
@@ -7,14 +8,17 @@ class MovieCommentSerializer(serializers.ModelSerializer):
         model = MovieComment
         fields = ['id', 'content']
 
+
 class MovieLikeSerializer(serializers.ModelSerializer):
     class Meta:
         model = MovieLike
         fields = ['like']
 
 class MovieSerializer(serializers.ModelSerializer):
+
     movie_comments = MovieCommentSerializer(many=True, read_only=True)
 
     class Meta:
         model = Movie
         fields = ['id', 'title', 'description', 'image_url', 'genre', 'likes', 'dislikes', 'is_liked', 'number_visit', 'movie_comments',  ]
+

@@ -1,7 +1,7 @@
 from rest_framework import generics
 
 from ..models import Movie, MovieLike, MovieComment
-from .serializers import MovieSerializer, MovieLikeSerializer, MovieCommentSerializer
+from .serializers import MovieSerializer, MovieLikeSerializer, MovieCommentSerializer, MovieGenreSerializer, MoviePopularSerializer
 from .pagination import MovieListPagination, CommentListPagination
 
 from rest_framework import filters
@@ -86,7 +86,6 @@ class CommentCreate(generics.CreateAPIView):
         user = self.request.user
 
         serializer.save(movie=movie, user=user)
-        print(serializer)
 
 class CommentList(generics.ListAPIView):
     serializer_class = MovieCommentSerializer
@@ -95,6 +94,22 @@ class CommentList(generics.ListAPIView):
 
     def get_queryset(self):
         pk = self.kwargs['pk']
-        return MovieComment.objects.filter(movie=pk)
-        movie.save()
-        serializer.save(movie=movie, user=user)
+        return MovieComment.objects.filter(movie=pk).order_by('-id')
+        # movie.save()
+        # serializer.save(movie=movie, user=user)
+
+class MovieGenreList(generics.ListAPIView):
+    serializer_class = MovieGenreSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+           pk = self.kwargs['pk']
+           movie = Movie.objects.get(pk=pk)
+           return Movie.objects.filter(genre=movie.genre)[:10]
+
+class MoviePopularList(generics.ListAPIView):
+    serializer_class = MoviePopularSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+           return Movie.objects.filter(likes__gt=0).order_by('-likes')[:10]

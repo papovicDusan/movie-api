@@ -1,6 +1,6 @@
 from django.urls import path
 
-from .views import MovieListCreate, MovieDetail, LikeCreate, CommentCreate, CommentList
+from .views import MovieListCreate, MovieDetail, LikeCreate, CommentCreate, CommentList, MovieGenreList, MoviePopularList
 
 
 urlpatterns = [
@@ -10,4 +10,6 @@ urlpatterns = [
 
     path('comments/<int:pk>/comment-create/', CommentCreate.as_view(), name='comment-create'),
     path('comments/<int:pk>/comment-list/', CommentList.as_view(), name='comment-list'),
+    path('<int:pk>/movie-genre-list/', MovieGenreList.as_view(), name='movie-genre-list'),
+    path('movie-popular-list/', MoviePopularList.as_view(), name='movie-popular-list'),
 ]

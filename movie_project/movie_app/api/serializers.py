@@ -2,6 +2,18 @@ from rest_framework import serializers
 
 from ..models import Movie, MovieLike, MovieComment
 
+class MoviePopularSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Movie
+        fields = ['id', 'title', 'likes']
+
+class MovieGenreSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Movie
+        fields = ['id', 'title']
+
 class MovieCommentSerializer(serializers.ModelSerializer):
 
     class Meta:

@@ -17,7 +17,6 @@ class Movie(models.Model):
     genre = models.CharField(max_length=20, choices=MOVIE_GENRES, default=MOVIE_GENRES.historical)
     likes = models.IntegerField(default=0)
     dislikes = models.IntegerField(default=0)
-    is_liked = models.BooleanField(default=False)
     number_visit = models.IntegerField(default=0)
 
     def __str__(self):

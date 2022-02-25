@@ -38,12 +38,6 @@ class MovieDetail(generics.RetrieveAPIView):
         movie = self.get_object(pk)
         user = self.request.user
 
-        like_queryset = MovieLike.objects.filter(movie=movie, user=user)
-        if like_queryset.exists():
-            movie.is_liked = True
-        if not like_queryset.exists():
-            movie.is_liked = False
-
         movie.number_visit = movie.number_visit+1
         movie.save()
         serializer = MovieSerializer(movie)

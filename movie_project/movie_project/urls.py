@@ -17,11 +17,13 @@ from django.contrib import admin
 from django.urls import path, include
 # from movie_project.movie_viewset.urls import router_movie
 
-from .movie_viewset.urls import router_movie
+from .movie_viewset.urls import router_movie, router_comment, router_popular_movie
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     # path('movies/', include('movie_app.api.urls')),
     path('', include(router_movie.urls)),
+    path('', include(router_comment.urls)),
+    path('', include(router_popular_movie.urls)),
     path('auth/', include('user_app.api.urls')),
 ]

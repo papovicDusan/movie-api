@@ -9,7 +9,8 @@ class MovieSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Movie
-        fields = ['id', 'title', 'description', 'image_url', 'genre', 'visits', 'likes', 'dislikes', 'liked_or_disliked_user', ]
+        fields = ['id', 'title', 'description', 'image_url', 'genre', 'visits', 'likes', 'dislikes',
+                  'liked_or_disliked_user', ]
 
 class AddReactionSerializer(serializers.ModelSerializer):
     class Meta:
@@ -32,7 +33,7 @@ class PopularMovieSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Movie
-        fields = ['id', 'title', 'likes']
+        fields = ['id', 'title']
 
 class RelatedMovieSerializer(serializers.ModelSerializer):
 

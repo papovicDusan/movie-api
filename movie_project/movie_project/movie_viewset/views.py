@@ -23,7 +23,7 @@ class PopularMovieViewSet(viewsets.GenericViewSet):
 
 
 class CommentViewSet(mixins.ListModelMixin,
-    viewsets.GenericViewSet):
+                     viewsets.GenericViewSet):
 
     serializer_class = CommentSerializer
     permission_classes = [IsAuthenticated]

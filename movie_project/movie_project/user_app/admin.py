@@ -3,7 +3,6 @@ from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import gettext_lazy as _
 
 from .models import CustomUser
-from ..movie_view.models import MovieWatchlist
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
@@ -32,4 +31,3 @@ class EmailUserAdmin(UserAdmin):
 
 
 admin.site.register(User, EmailUserAdmin)
-# admin.site.register(MovieWatchlist)

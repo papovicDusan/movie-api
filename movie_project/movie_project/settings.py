@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'corsheaders',
     'django_filters',
-    'movie_project.movie_viewset',
+    'movie_project.movie_view',
 ]
 
 MIDDLEWARE = [
@@ -146,7 +146,7 @@ CORS_ALLOW_ALL_ORIGINS = True
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': ['rest_framework_simplejwt.authentication.JWTAuthentication'],
     # 'DEFAULT_PERMISSION_CLASSES' : ['rest_framework.permissions.IsAuthenticated']
-    'DEFAULT_PAGINATION_CLASS': 'movie_project.movie_viewset.paginations.ProjectPageNumberPagination',
+    'DEFAULT_PAGINATION_CLASS': 'movie_project.movie_view.paginations.ProjectPageNumberPagination',
 
 }
 

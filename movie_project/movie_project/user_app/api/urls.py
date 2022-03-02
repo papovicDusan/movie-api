@@ -10,8 +10,13 @@
 # ]
 
 from django.urls import path
-from rest_framework import routers
-from .views import UserViewSet
+#from rest_framework import routers
+from .views import UserViewSet, WatchlistViewSet
+from rest_framework_nested import routers
 
 router_user = routers.SimpleRouter()
 router_user.register(r'users', UserViewSet)
+
+
+router_user_nested = routers.NestedSimpleRouter(router_user, r'users', lookup='user')
+router_user_nested.register(r'watchlist', WatchlistViewSet, basename='watchlist')

@@ -15,10 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-# from movie_project.movie_viewset.urls import router_movie
+# from movie_project.movie_view.urls import router_movie
 
-from .movie_viewset.urls import router_movie, router_comment, router_popular_movie
-from .user_app.api.urls import router_user
+from .movie_view.urls import router_movie, router_comment, router_popular_movie
+from .user_app.api.urls import router_user, router_user_nested
 from rest_framework_simplejwt.views import TokenObtainPairView
 from .user_app.api.views import EmailTokenObtainPairView
 
@@ -31,4 +31,5 @@ urlpatterns = [
     path('', include(router_popular_movie.urls)),
     # path('auth/', include('user_app.api.urls')),
     path('', include(router_user.urls)),
+    path('', include(router_user_nested.urls)),
 ]

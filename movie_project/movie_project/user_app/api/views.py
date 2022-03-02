@@ -8,9 +8,21 @@ from .serializers import CreateUserSerializer, UserSerializer, TokenObtainPairSe
 from rest_framework import viewsets, mixins
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.status import HTTP_200_OK, HTTP_201_CREATED
+from rest_framework.status import HTTP_200_OK, HTTP_201_CREATED,HTTP_204_NO_CONTENT, HTTP_403_FORBIDDEN
+
+from ...movie_view.models import MovieWatchlist
 
 User = get_user_model()
+
+from .serializers import (
+    CreateUserSerializer,
+    UserSerializer,
+    AddAndRemoveMovieWatchlistSerializer,
+    UpdateMovieWatchlistSerializer,
+    MovieWatchlistSerializer
+)
+
+from .permissions import UserAccessPermission
 
 # class RegisterView(APIView):
 #     http_method_names = ['post']
@@ -47,3 +59,27 @@ class UserViewSet(mixins.CreateModelMixin,
     def get_current_user(self, request):
         response_serializer = UserSerializer(request.user)
         return Response(response_serializer.data, HTTP_200_OK)
+
+class WatchlistViewSet(mixins.ListModelMixin,
+                    mixins.DestroyModelMixin,
+                    mixins.UpdateModelMixin,
+                    viewsets.GenericViewSet):
+
+    permission_classes = [IsAuthenticated, UserAccessPermission]
+    pagination_class = None
+
+    def get_serializer_class(self):
+        if self.action == 'partial_update':
+            return UpdateMovieWatchlistSerializer
+        return MovieWatchlistSerializer
+
+    def get_queryset(self):
+        return MovieWatchlist.objects.filter(user=self.kwargs['user_pk']).order_by('id')
+
+    def create(self, request, user_pk):
+        serializer = AddAndRemoveMovieWatchlistSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        movie_id = serializer.data['movie']
+        watchlist_movie = MovieWatchlist.objects.update_or_create(user_id=user_pk, movie_id=movie_id)[0]
+        response_serializer = self.get_serializer(watchlist_movie)
+        return Response(response_serializer.data, status=HTTP_201_CREATED)

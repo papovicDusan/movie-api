@@ -7,8 +7,14 @@ from ..models import CustomUser
 class TokenObtainPairSerializer(JwtTokenObtainPairSerializer):
     username_field = CustomUser.USERNAME_FIELD
 
+class CreateUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = get_user_model()
+        fields = ['email', 'password', 'name']
+
+    name = serializers.CharField(required=True)
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = get_user_model()
-        fields = ('email', 'password','name')
+        fields = ['id', 'email', 'name']

@@ -43,12 +43,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     # 'movie_app',
-    'user_app',
+    'movie_project.user_app',
     'rest_framework_simplejwt',
     'corsheaders',
     'django_filters',
-    'movie_project.movie_viewset'
-
+    'movie_project.movie_viewset',
 ]
 
 MIDDLEWARE = [
@@ -137,7 +136,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'user_app.CustomUser'
 
-AUTHENTICATION_BACKENDS = ['user_app.auth_backends.EmailBackend']
+# AUTHENTICATION_BACKENDS = ['user_app.auth_backends.EmailBackend']
 
 CORS_ALLOWED_ORIGINS = []
 

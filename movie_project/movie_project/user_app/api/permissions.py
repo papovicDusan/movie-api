@@ -8,8 +8,3 @@ class UserAccessPermission(BasePermission):
         if str(request.user.id) == view.kwargs['user_pk']:
             return True
         return False
-
-    def has_object_permission(self, request, view, obj):
-        if obj.user == request.user:
-            return True
-        return False

@@ -4,6 +4,7 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer as Jw
 
 from ..models import CustomUser
 from ...movie_view.models import MovieWatchlist
+from ...movie_view.serializers import BasicMovieSerializer
 
 
 class TokenObtainPairSerializer(JwtTokenObtainPairSerializer):
@@ -25,6 +26,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 class MovieWatchlistSerializer(serializers.ModelSerializer):
 
+    movie = BasicMovieSerializer(read_only=True)
 
     class Meta:
         model = MovieWatchlist

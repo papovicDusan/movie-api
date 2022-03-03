@@ -3,9 +3,12 @@ from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import gettext_lazy as _
 
 from .models import CustomUser
+from django.contrib.auth import get_user_model
 
+User = get_user_model()
 
 class EmailUserAdmin(UserAdmin):
+    model = User
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
         (_('Personal info'), {'fields': ('name',)}),
@@ -27,4 +30,4 @@ class EmailUserAdmin(UserAdmin):
     filter_horizontal = ('groups', 'user_permissions',)
 
 
-admin.site.register(CustomUser, EmailUserAdmin)
+admin.site.register(User, EmailUserAdmin)

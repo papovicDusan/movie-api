@@ -2,6 +2,7 @@ from django.db import models
 from .utils import MOVIE_GENRES
 from django.contrib.auth import get_user_model
 
+
 User = get_user_model()
 
 
@@ -40,3 +41,9 @@ class Comment(models.Model):
 
     def __str__(self):
         return f'{self.movie} | {self.user}'
+
+
+class MovieWatchlist(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_watchlist')
+    movie = models.ForeignKey(Movie, on_delete=models.CASCADE, related_name='movie_watchlist')
+    is_watched = models.BooleanField(default=False)

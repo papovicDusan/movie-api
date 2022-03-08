@@ -6,23 +6,8 @@ from ..models import CustomUser
 from ...movie_view.models import MovieWatchlist
 from ...movie_view.serializers import BasicMovieSerializer
 
-
 class TokenObtainPairSerializer(JwtTokenObtainPairSerializer):
     username_field = CustomUser.USERNAME_FIELD
-
-class CreateUserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = get_user_model()
-        fields = ['email', 'password', 'name']
-
-    name = serializers.CharField(required=True)
-
-class UserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = get_user_model()
-        fields = ['id', 'email', 'name']
-
-# from movie_project.movies.serializers import BasicMovieSerializer
 
 class MovieWatchlistSerializer(serializers.ModelSerializer):
 
@@ -32,16 +17,23 @@ class MovieWatchlistSerializer(serializers.ModelSerializer):
         model = MovieWatchlist
         fields = ['id', 'movie', 'is_watched']
 
-class AddAndRemoveMovieWatchlistSerializer(serializers.ModelSerializer):
+class CreateUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = get_user_model()
+        fields = ['email', 'password', 'name']
+
+    name = serializers.CharField(required=True)
+
+class UserSerializer(serializers.ModelSerializer):
+    user_watchlist = MovieWatchlistSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = get_user_model()
+        fields = ['id', 'email', 'name', 'user_watchlist', ]
+
+class AddMovieWatchlistSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = MovieWatchlist
-        fields = ['movie']
+        fields = ['movie', ]
 
-class UpdateMovieWatchlistSerializer(serializers.ModelSerializer):
-
-    is_watched = serializers.BooleanField(required=True)
-
-    class Meta:
-        model = MovieWatchlist
-        fields = ['movie', 'is_watched']

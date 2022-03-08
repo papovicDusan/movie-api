@@ -1,4 +1,3 @@
-
 from .views import MovieViewSet, CommentViewSet, PopularMovieViewSet
 from rest_framework_nested import routers
 

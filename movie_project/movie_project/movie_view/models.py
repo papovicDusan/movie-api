@@ -2,14 +2,11 @@ from django.db import models
 from .utils import MOVIE_GENRES
 from django.contrib.auth import get_user_model
 
-
 User = get_user_model()
-
 
 class Like(models.IntegerChoices):
     LIKE = 1
     DISLIKE = -1
-
 
 class Movie(models.Model):
     title = models.CharField(max_length=20)
@@ -20,7 +17,6 @@ class Movie(models.Model):
 
     def __str__(self):
         return self.title
-
 
 class Reaction(models.Model):
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE, related_name='movie_likes')
@@ -42,8 +38,10 @@ class Comment(models.Model):
     def __str__(self):
         return f'{self.movie} | {self.user}'
 
-
 class MovieWatchlist(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_watchlist')
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE, related_name='movie_watchlist')
     is_watched = models.BooleanField(default=False)
+
+    class Meta:
+        unique_together = ('user', 'movie')

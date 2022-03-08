@@ -3,14 +3,6 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils.translation import gettext_lazy as _
 
-# from ..movie_view.models import Movie
-#
-# from django.contrib.auth import get_user_model
-#
-#
-# User = get_user_model()
-
-
 class CustomUserManager(BaseUserManager):
     """
     Custom user model manager where email is the unique identifiers
@@ -57,17 +49,3 @@ class CustomUser(AbstractUser):
 
     def __str__(self):
         return self.email
-
-
-# class MovieWatchlist(models.Model):
-#     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='user_watchlist')
-#     movie = models.ForeignKey(Movie, on_delete=models.CASCADE, related_name='movie_watchlist')
-#     is_watched = models.BooleanField(default=False)
-#
-#     # class Meta:
-#     #    pass # unique_together = ('user',)
-
-# class MovieWatchlist(models.Model):
-#     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_watchlist')
-#     movie = models.ForeignKey(Movie, on_delete=models.CASCADE, related_name='movie_watchlist')
-#     is_watched = models.BooleanField(default=False)

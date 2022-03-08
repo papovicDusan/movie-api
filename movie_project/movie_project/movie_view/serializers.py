@@ -1,7 +1,6 @@
 from rest_framework import serializers
 from .models import Movie, Reaction, Comment
 
-
 class MovieSerializer(serializers.ModelSerializer):
     likes = serializers.IntegerField(read_only=True, default=0)
     dislikes = serializers.IntegerField(read_only=True, default=0)

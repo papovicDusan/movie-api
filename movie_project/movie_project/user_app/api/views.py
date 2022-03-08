@@ -10,10 +10,8 @@ from ...movie_view.models import MovieWatchlist
 from .serializers import (
     CreateUserSerializer,
     UserSerializer,
-    AddMovieWatchlistSerializer,
     MovieWatchlistSerializer
 )
-# from .permissions import UserAccessPermission
 User = get_user_model()
 
 class EmailTokenObtainPairView(TokenObtainPairView):
@@ -45,18 +43,10 @@ class WatchlistViewSet(mixins.ListModelMixin,
                     mixins.DestroyModelMixin,
                     mixins.UpdateModelMixin,
                     mixins.CreateModelMixin,
+                    mixins.RetrieveModelMixin,
                     viewsets.GenericViewSet):
 
-    # permission_classes = [IsAuthenticated, UserAccessPermission]
     permission_classes = [IsAuthenticated, ]
     pagination_class = None
     queryset = MovieWatchlist.objects.all()
     serializer_class = MovieWatchlistSerializer
-
-    def create(self, request, *args, **kwargs):
-        serializer = AddMovieWatchlistSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        movie_id = serializer.data['movie']
-        watchlist_movie = MovieWatchlist.objects.update_or_create(user_id=request.user.id, movie_id=movie_id)[0]
-        response_serializer = self.get_serializer(watchlist_movie)
-        return Response(response_serializer.data, status=HTTP_201_CREATED)

@@ -3,13 +3,12 @@ from rest_framework.permissions import IsAuthenticated
 from .models import Movie, Like, Reaction, Comment
 from .serializers import MovieSerializer, AddReactionSerializer, AddCommentSerializer, CommentSerializer,\
     PopularMovieSerializer, RelatedMovieSerializer
-from django.db.models import Q, Count, Sum, Case, When, BooleanField
+from django.db.models import Q, Count, Sum
 from django.db.models.functions import Coalesce
 from rest_framework.status import HTTP_204_NO_CONTENT, HTTP_200_OK, HTTP_404_NOT_FOUND, HTTP_201_CREATED
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from django_filters.rest_framework import DjangoFilterBackend
-
 
 class PopularMovieViewSet(viewsets.GenericViewSet):
 

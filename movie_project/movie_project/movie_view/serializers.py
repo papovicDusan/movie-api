@@ -5,11 +5,27 @@ class MovieSerializer(serializers.ModelSerializer):
     likes = serializers.IntegerField(read_only=True, default=0)
     dislikes = serializers.IntegerField(read_only=True, default=0)
     liked_or_disliked_user = serializers.IntegerField(read_only=True, default=0)
+    thumbnail = serializers.SerializerMethodField()
+    full_size = serializers.SerializerMethodField()
 
     class Meta:
         model = Movie
         fields = ['id', 'title', 'description', 'image_url', 'genre', 'visits', 'likes', 'dislikes',
-                  'liked_or_disliked_user', ]
+                  'liked_or_disliked_user', 'thumbnail', 'full_size']
+
+    def get_thumbnail(self, obj):
+        return obj.image_url.thumbnail.url if obj.image_url is not None else False
+
+    def get_full_size(self, obj):
+        return obj.image_url.full_size.url if obj.image_url is not None else False
+
+
+class AddMovieSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Movie
+        fields = ['id', 'title', 'description', 'genre', 'visits']
+
 
 class BasicMovieSerializer(serializers.ModelSerializer):
     class Meta:
@@ -44,3 +60,4 @@ class RelatedMovieSerializer(serializers.ModelSerializer):
     class Meta:
         model = Movie
         fields = ['id', 'title']
+

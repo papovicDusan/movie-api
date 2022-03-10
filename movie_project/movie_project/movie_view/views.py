@@ -1,8 +1,8 @@
 from rest_framework import viewsets, mixins, filters
 from rest_framework.permissions import IsAuthenticated
-from .models import Movie, Like, Reaction, Comment
+from .models import Movie, Like, Reaction, Comment, MovieImage
 from .serializers import MovieSerializer, AddReactionSerializer, AddCommentSerializer, CommentSerializer,\
-    PopularMovieSerializer, RelatedMovieSerializer
+    PopularMovieSerializer, RelatedMovieSerializer, AddMovieSerializer
 from django.db.models import Q, Count, Sum
 from django.db.models.functions import Coalesce
 from rest_framework.status import HTTP_204_NO_CONTENT, HTTP_200_OK, HTTP_404_NOT_FOUND, HTTP_201_CREATED
@@ -55,6 +55,16 @@ class MovieViewSet(mixins.ListModelMixin,
             dislikes=Coalesce(Count('movie_likes__like', filter=Q(movie_likes__like=Like.DISLIKE)), 0),
             liked_or_disliked_user=Coalesce(Sum('movie_likes__like', filter=Q(movie_likes__user=self.request.user)), 0),
         ).order_by('id')
+
+    def create(self, request):
+        serializer = AddMovieSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        print(serializer.data)
+        image = MovieImage.objects.create(thumbnail=request.FILES.get('image_url'), full_size=request.FILES.get('image_url'))
+        movie = Movie.objects.create(**serializer.data, image_url=image)
+        response_serializer = self.get_serializer(movie)
+        return Response(response_serializer.data, status=HTTP_201_CREATED)
+
 
     @action(detail=True, url_path='related-movies')
     def related_movies(self, request, pk):

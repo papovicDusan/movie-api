@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'django_filters',
     'movie_project.movie_view',
+    'easy_thumbnails',
 ]
 
 MIDDLEWARE = [
@@ -153,4 +154,10 @@ REST_FRAMEWORK = {
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
 }
+
+DATA_UPLOAD_MAX_MEMORY_SIZE = 4096000
+
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',
+]
 

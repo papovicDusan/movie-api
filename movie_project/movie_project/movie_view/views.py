@@ -59,12 +59,10 @@ class MovieViewSet(mixins.ListModelMixin,
     def create(self, request):
         serializer = AddMovieSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        print(serializer.data)
         image = MovieImage.objects.create(thumbnail=request.FILES.get('image_url'), full_size=request.FILES.get('image_url'))
         movie = Movie.objects.create(**serializer.data, image_url=image)
         response_serializer = self.get_serializer(movie)
         return Response(response_serializer.data, status=HTTP_201_CREATED)
-
 
     @action(detail=True, url_path='related-movies')
     def related_movies(self, request, pk):

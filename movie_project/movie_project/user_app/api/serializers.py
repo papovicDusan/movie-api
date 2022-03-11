@@ -25,7 +25,8 @@ class MovieWatchlistSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = MovieWatchlist
-        fields = ['id', 'movie', 'is_watched', 'user', ]
+        fields = ['id', 'movie', 'is_watched', 'user']
+
 
 class CreateUserSerializer(serializers.ModelSerializer):
     class Meta:

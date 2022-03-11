@@ -28,9 +28,18 @@ class AddMovieSerializer(serializers.ModelSerializer):
 
 
 class BasicMovieSerializer(serializers.ModelSerializer):
+    thumbnail = serializers.SerializerMethodField()
+    full_size = serializers.SerializerMethodField()
+
     class Meta:
         model = Movie
-        fields = ['id', 'title', 'description', 'image_url', 'genre']
+        fields = ['id', 'title', 'description', 'image_url', 'genre', 'thumbnail', 'full_size']
+
+    def get_thumbnail(self, obj):
+        return obj.image_url.thumbnail.url if obj.image_url is not None else False
+
+    def get_full_size(self, obj):
+        return obj.image_url.full_size.url if obj.image_url is not None else False
 
 class AddReactionSerializer(serializers.ModelSerializer):
     class Meta:

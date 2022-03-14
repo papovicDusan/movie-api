@@ -9,6 +9,8 @@ from rest_framework.status import HTTP_204_NO_CONTENT, HTTP_200_OK, HTTP_404_NOT
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from django_filters.rest_framework import DjangoFilterBackend
+from django.core.mail import send_mail
+
 
 class PopularMovieViewSet(viewsets.GenericViewSet):
 
@@ -61,6 +63,16 @@ class MovieViewSet(mixins.ListModelMixin,
         serializer.is_valid(raise_exception=True)
         image = MovieImage.objects.create(thumbnail=request.FILES.get('image_url'), full_size=request.FILES.get('image_url'))
         movie = Movie.objects.create(**serializer.data, image_url=image)
+
+        send_mail(
+            'New movie: {}'.format(movie.title),
+            'Title: {}\nDescription: {}\nGenre: {}'.format(
+                movie.title, movie.description, movie.genre),
+            'from@example.com',
+            ['to@example.com'],
+            fail_silently=False,
+        )
+
         response_serializer = self.get_serializer(movie)
         return Response(response_serializer.data, status=HTTP_201_CREATED)
 

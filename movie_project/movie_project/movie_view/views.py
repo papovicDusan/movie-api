@@ -10,6 +10,7 @@ from rest_framework.response import Response
 from rest_framework.decorators import action
 from django_filters.rest_framework import DjangoFilterBackend
 
+
 class PopularMovieViewSet(viewsets.GenericViewSet):
 
     permission_classes = [IsAuthenticated]

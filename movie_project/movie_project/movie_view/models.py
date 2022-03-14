@@ -2,6 +2,8 @@ from django.db import models
 from .utils import MOVIE_GENRES
 from django.contrib.auth import get_user_model
 from easy_thumbnails.fields import ThumbnailerImageField
+from django.db.models.signals import post_save
+from django.core.mail import send_mail
 
 User = get_user_model()
 
@@ -27,6 +29,21 @@ class Movie(models.Model):
 
     def __str__(self):
         return self.title
+
+
+def movie_post_save(sender, instance, created, *args, **kwargs):
+    if created:
+        send_mail(
+            'New movie: {}'.format(instance.title),
+            'Title: {}\nDescription: {}\nGenre: {}'.format(
+                instance.title, instance.description, instance.genre),
+            'from@example.com',
+            ['to@example.com'],
+            fail_silently=False,
+        )
+
+
+post_save.connect(movie_post_save, sender=Movie)
 
 
 class Reaction(models.Model):

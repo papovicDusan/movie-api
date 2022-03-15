@@ -4,6 +4,7 @@ from django.contrib.auth import get_user_model
 from easy_thumbnails.fields import ThumbnailerImageField
 from django.db.models.signals import post_save
 from django.core.mail import send_mail
+from .tasks import send_mail_celery
 
 User = get_user_model()
 
@@ -33,14 +34,8 @@ class Movie(models.Model):
 
 def movie_post_save(sender, instance, created, *args, **kwargs):
     if created:
-        send_mail(
-            'New movie: {}'.format(instance.title),
-            'Title: {}\nDescription: {}\nGenre: {}'.format(
-                instance.title, instance.description, instance.genre),
-            'from@example.com',
-            ['to@example.com'],
-            fail_silently=False,
-        )
+        send_mail_celery.delay(
+            {'title': instance.title, 'description': instance.description, 'genre': instance.genre})
 
 
 post_save.connect(movie_post_save, sender=Movie)
